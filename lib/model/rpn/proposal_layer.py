@@ -14,14 +14,15 @@ import torch.nn as nn
 import numpy as np
 import math
 import yaml
-from model.utils.config import cfg
+from lib.model.utils.config import cfg
 from .generate_anchors import generate_anchors
 from .bbox_transform import bbox_transform_inv, clip_boxes, clip_boxes_batch
-# from model.nms.nms_wrapper import nms
-from model.roi_layers import nms
+# from lib.model.nms.nms_wrapper import nms
+from lib.model.roi_layers import nms
 import pdb
 
 DEBUG = False
+
 
 class _ProposalLayer(nn.Module):
     """
@@ -33,8 +34,7 @@ class _ProposalLayer(nn.Module):
         super(_ProposalLayer, self).__init__()
 
         self._feat_stride = feat_stride
-        self._anchors = torch.from_numpy(generate_anchors(scales=np.array(scales),
-            ratios=np.array(ratios))).float()
+        self._anchors = torch.from_numpy(generate_anchors(scales=np.array(scales), ratios=np.array(ratios))).float()
         self._num_anchors = self._anchors.size(0)
 
         # rois blob: holds R regions of interest, each is a 5-tuple

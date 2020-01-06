@@ -8,8 +8,8 @@ from __future__ import absolute_import
 # --------------------------------------------------------
 
 import os
-from datasets.imdb import imdb
-import datasets.ds_utils as ds_utils
+from lib.datasets.imdb import imdb
+import lib.datasets.ds_utils as ds_utils
 import xml.etree.ElementTree as ET
 import numpy as np
 import scipy.sparse
@@ -17,7 +17,7 @@ import gzip
 import PIL
 import json
 from .vg_eval import vg_eval
-from model.utils.config import cfg
+from lib.model.utils.config import cfg
 import pickle
 import pdb
 try:

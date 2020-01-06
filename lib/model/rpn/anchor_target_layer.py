@@ -14,7 +14,7 @@ import torch.nn as nn
 import numpy as np
 import numpy.random as npr
 
-from model.utils.config import cfg
+from lib.model.utils.config import cfg
 from .generate_anchors import generate_anchors
 from .bbox_transform import clip_boxes, bbox_overlaps_batch, bbox_transform_batch
 
@@ -107,7 +107,7 @@ class _AnchorTargetLayer(nn.Module):
         keep = torch.sum(overlaps.eq(gt_max_overlaps.view(batch_size,1,-1).expand_as(overlaps)), 2)
 
         if torch.sum(keep) > 0:
-            labels[keep>0] = 1
+            labels[keep > 0] = 1
 
         # fg label: above threshold IOU
         labels[max_overlaps >= cfg.TRAIN.RPN_POSITIVE_OVERLAP] = 1

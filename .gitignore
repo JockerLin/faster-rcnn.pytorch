@@ -22,6 +22,10 @@ data/*
 */**/**/*.pyc
 */**/**/**/*.pyc
 */**/**/**/**/*.pyc
+*.pth
+images.backup/*
+imagesdetect.bk/*
+models/*
 aten/build/
 aten/src/ATen/Config.h
 aten/src/ATen/cuda/CUDAConfig.h

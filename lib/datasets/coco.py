@@ -7,9 +7,9 @@ from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
 
-from datasets.imdb import imdb
-import datasets.ds_utils as ds_utils
-from model.utils.config import cfg
+from lib.datasets.imdb import imdb
+import lib.datasets.ds_utils as ds_utils
+from lib.model.utils.config import cfg
 import os.path as osp
 import sys
 import os
