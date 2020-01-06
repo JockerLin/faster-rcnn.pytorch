@@ -241,6 +241,7 @@ if __name__ == '__main__':
     webcam_num = args.webcam_num
     # Set up webcam or get image directories
     if webcam_num >= 0:
+        # cap = cv2.VideoCapture("vtest.avi")
         cap = cv2.VideoCapture(webcam_num)
         num_images = 0
     else:

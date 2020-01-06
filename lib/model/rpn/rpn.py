@@ -89,13 +89,18 @@ class _RPN(nn.Module):
         rpn_cls_prob = self.reshape(rpn_cls_prob_reshape, self.nc_score_out)  # reshape 2  [1, 18, H, W]
         # 输出包含的信息 9个roi 每个roi是positive 还是 negative
 
-        # get rpn offsets to the anchor boxes 第二条主线 计算每个anchors的bbox regression偏移量 为什么还要计算negative的偏移量？
+        # get rpn offsets to the anchor boxes
+        # 第二条主线 计算每个anchors的bbox regression偏移量 为什么还要计算negative的偏移量？
+        # 该层输入图像为WxHx36 feature map的每个点都有9个anchors 每个anchor有4个回归的xywh变量
+        #
         rpn_bbox_pred = self.RPN_bbox_pred(rpn_conv1)
 
         # proposal layer
         cfg_key = 'TRAIN' if self.training else 'TEST'
 
-        # Region proposal 吃的数据有第一条主线的anchors分类 第二条主线的anchors偏移量 整合之前的网络层，形成了RPN
+        # Region proposal
+        # 吃的参数有 第一条主线的anchors分类器结果negative or positive
+        #          第二条主线的anchors回归偏移量[dx(A), dy(A), dw(A), dh(A)] 整合之前的网络层，形成了RPN
         # 此处走Region_Proposal Layer 的 forward函数 输入rpn网络的一大堆roi
         rois = self.RPN_proposal((rpn_cls_prob.data, rpn_bbox_pred.data, im_info, cfg_key))
 

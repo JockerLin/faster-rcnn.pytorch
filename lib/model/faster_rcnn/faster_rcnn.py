@@ -50,7 +50,7 @@ class _fasterRCNN(nn.Module):
         num_boxes = num_boxes.data
 
         # feed image data to base model to obtain base feature map
-        # 获得RPN之前 卷积网络的feature map
+        # 获得RPN之前 卷积网络的feature map vgg网络输出
         base_feat = self.RCNN_base(im_data)
 
         # feed base feature map tp RPN to obtain rois
