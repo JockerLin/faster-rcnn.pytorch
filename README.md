@@ -1,5 +1,7 @@
 # A *Faster* Pytorch Implementation of Faster R-CNN
 
+this project forked from [jwyang/faster-rcnn.pytorch](https://github.com/jwyang/faster-rcnn.pytorch) ,add my notations for code commenting.
+
 ## Introduction
 
 ### Good news! This repo supports pytorch-1.0 now!!! We borrowed some code and techniques from [maskrcnn-benchmark](https://github.com/facebookresearch/maskrcnn-benchmark).
@@ -236,7 +238,7 @@ This project is equally contributed by [Jianwei Yang](https://github.com/jwyang)
         Journal = {https://github.com/jwyang/faster-rcnn.pytorch},
         Year = {2017}
     }
-
+    
     @inproceedings{renNIPS15fasterrcnn,
         Author = {Shaoqing Ren and Kaiming He and Ross Girshick and Jian Sun},
         Title = {Faster {R-CNN}: Towards Real-Time Object Detection

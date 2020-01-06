@@ -17,6 +17,7 @@ from ..utils.config import cfg
 from .bbox_transform import bbox_overlaps_batch, bbox_transform_batch
 import pdb
 
+
 class _ProposalTargetLayer(nn.Module):
     """
     Assign object detection proposals to ground-truth targets. Produces proposal

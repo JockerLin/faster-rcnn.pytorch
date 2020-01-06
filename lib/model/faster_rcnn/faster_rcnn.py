@@ -42,6 +42,7 @@ class _fasterRCNN(nn.Module):
         self.RCNN_roi_align = ROIAlign((cfg.POOLING_SIZE, cfg.POOLING_SIZE), 1.0/16.0, 0)
 
     def forward(self, im_data, im_info, gt_boxes, num_boxes):
+        # 主网络层的前向传播
         batch_size = im_data.size(0)
 
         im_info = im_info.data
@@ -49,13 +50,16 @@ class _fasterRCNN(nn.Module):
         num_boxes = num_boxes.data
 
         # feed image data to base model to obtain base feature map
+        # 获得RPN之前 卷积网络的feature map
         base_feat = self.RCNN_base(im_data)
 
         # feed base feature map tp RPN to obtain rois
+        # 通过rpn获得roi
         rois, rpn_loss_cls, rpn_loss_bbox = self.RCNN_rpn(base_feat, im_info, gt_boxes, num_boxes)
 
         # if it is training phrase, then use ground trubut bboxes for refining
         if self.training:
+            # bboxes 微调 region proposal
             roi_data = self.RCNN_proposal_target(rois, gt_boxes, num_boxes)
             rois, rois_label, rois_target, rois_inside_ws, rois_outside_ws = roi_data
 
@@ -73,7 +77,9 @@ class _fasterRCNN(nn.Module):
 
         rois = Variable(rois)
         # do roi pooling based on predicted rois
-
+        # roi polling层 输入两个参数：卷积网络的feature map rois的位置
+        # 每个输入的roi(不同尺寸)会输出一个固定尺寸的基于feature map的新roi(相同尺寸7*7)
+        # 输出rois的feature map
         if cfg.POOLING_MODE == 'align':
             pooled_feat = self.RCNN_roi_align(base_feat, rois.view(-1, 5))
         elif cfg.POOLING_MODE == 'pool':
@@ -83,6 +89,7 @@ class _fasterRCNN(nn.Module):
         pooled_feat = self._head_to_tail(pooled_feat)
 
         # compute bbox offset
+        # bbox预测
         bbox_pred = self.RCNN_bbox_pred(pooled_feat)
         if self.training and not self.class_agnostic:
             # select the corresponding columns according to roi labels
@@ -91,6 +98,7 @@ class _fasterRCNN(nn.Module):
             bbox_pred = bbox_pred_select.squeeze(1)
 
         # compute object classification probability
+        # 计算分类的分数
         cls_score = self.RCNN_cls_score(pooled_feat)
         cls_prob = F.softmax(cls_score, 1)
 
