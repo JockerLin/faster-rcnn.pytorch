@@ -116,6 +116,7 @@ class _RPN(nn.Module):
 
             # compute classification loss
             # 为什么分类误差拿的是第一个reshape(softmax之前)的数据做比较
+            # [1, 2, H*9, W]--permute-->[1, H*9, W, 2]
             rpn_cls_score = rpn_cls_score_reshape.permute(0, 2, 3, 1).contiguous().view(batch_size, -1, 2)
             rpn_label = rpn_data[0].view(batch_size, -1)
 
@@ -136,6 +137,6 @@ class _RPN(nn.Module):
 
             # 整个rpn网络的loss
             self.rpn_loss_box = _smooth_l1_loss(rpn_bbox_pred, rpn_bbox_targets, rpn_bbox_inside_weights,
-                                                rpn_bbox_outside_weights, sigma=3, dim=[1,2,3])
+                                                rpn_bbox_outside_weights, sigma=3, dim=[1, 2, 3])
 
         return rois, self.rpn_loss_cls, self.rpn_loss_box
