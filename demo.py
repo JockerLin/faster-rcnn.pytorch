@@ -242,7 +242,10 @@ if __name__ == '__main__':
     # Set up webcam or get image directories
     if webcam_num >= 0:
         # cap = cv2.VideoCapture("vtest.avi")
-        cap = cv2.VideoCapture("material/vtest.avi")
+        if webcam_num == 66:
+            cap = cv2.VideoCapture("material/vtest.avi")
+        else:
+            cap = cv2.VideoCapture(webcam_num)
         num_images = 0
     else:
         imglist = os.listdir(args.image_dir)

@@ -23,7 +23,7 @@ python demo.py --net vgg16 --checksession 1 --checkepoch 20 --checkpoint 10021 -
 
 real time test
 ```bash
-python demo.py --net vgg16 --checksession 1 --checkepoch 20 --checkpoint 10021 --cuda --load_dir models/vgg16/pascal_voc --webcam 12
+python demo.py --net vgg16 --checksession 1 --checkepoch 20 --checkpoint 10021 --cuda --load_dir models/vgg16/pascal_voc --webcam 66
 ```
 
 watch logs
